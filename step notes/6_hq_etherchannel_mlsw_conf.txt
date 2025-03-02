@@ -1,0 +1,10 @@
+int range gig1/0/21-23
+channel-group 1 mode active / passive
+exit
+
+interface Port-channel 1
+switchport mode trunk
+exit
+
+do wr
+

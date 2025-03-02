@@ -1,0 +1,20 @@
+int vlan 10
+ip add 192.168.10.2/3 255.255.255.0
+ip helper-address 10.20.20.5
+ip helper-address 10.20.20.6
+standby 10 ip 192.168.10.1
+exit
+
+int vlan 20
+ip add 172.16.0.2 255.255.0.0
+ip helper-address 10.20.20.5
+ip helper-address 10.20.20.6
+standby 20 ip 172.16.0.1
+exit
+
+int vlan 50
+ip add 10.10.0.2 255.255.0.0
+ip helper-address 10.20.20.5
+ip helper-address 10.20.20.6
+standby 50 ip 10.10.0.1
+exit

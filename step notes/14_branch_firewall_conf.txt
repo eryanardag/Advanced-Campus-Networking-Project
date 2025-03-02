@@ -1,0 +1,25 @@
+int gig1/1
+no shut
+nameif INSIDE1
+security-level 100
+ip add 10.20.20.42 255.255.255.252
+ex
+
+int gig1/2
+no shut
+nameif INSIDE2
+security-level 100
+ip add 10.20.20.46 255.255.255.252
+ex
+
+int gig1/3
+no shut
+nameif OUTSIDE
+security-level 0
+ip add 205.200.100.2 255.255.255.252
+ex
+
+
+
+WR MEMORY
+

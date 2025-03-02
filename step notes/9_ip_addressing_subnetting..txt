@@ -1,0 +1,1 @@
+give ip for all interfaces of devices

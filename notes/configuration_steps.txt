@@ -1,0 +1,17 @@
+###Configuration Steps for Campus Networking Project###
+
+1-Network desgin and beaufication
+2-Basic settings to all devices + SSH + ACL for SSH
+3-Vlan Assigment + all Access and trunk ports on 12 and 13 switches
+4-STP Portfast and BDPUguard configs on all Access ports
+5-Etherchannel
+6-Subnetting and IP addressing
+7-HSRP and Inter-Vlan routing on the 13 switches + ip dhcp helper addresses
+8-Static IP address to DMZ farm devices
+9-DHCP SERVER configurations
+10-OSPF on the firewall routers and switches
+11-Firewall interface security zones and levels
+12-Firewall inspection policy configuration
+13-Wireless network configurations
+14-IPsec VPN on the Firewalls 
+15-Verfying and testing configurations

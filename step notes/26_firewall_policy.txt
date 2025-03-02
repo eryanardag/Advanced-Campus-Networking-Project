@@ -1,0 +1,26 @@
+route OUTSIDE 0.0.0.0 0.0.0.0 105.100.50.1
+object network INSIDE1-OUTSIDE
+subnet 192.168.10.0 255.255.255.0
+nat (INSIDE1,OUTSIDE) dynamic interface 
+
+object network INSIDE1a-OUTSIDE
+subnet 192.168.10.0 255.255.255.0
+at (INSIDE2,OUTSIDE) dynamic interface
+
+object network INSIDE2-OUTSIDE
+subnet 172.16.0.0 255.255.0.0
+nat (INSIDE1,OUTSIDE) dynamic interface
+
+object network INSIDE2a-OUTSIDE
+subnet 172.16.0.0 255.255.0.0
+nat (INSIDE2,OUTSIDE) dynamic interface
+
+object network INSIDE3-OUTSIDE
+subnet 10.10.0.0 255.255.0.0
+nat (INSIDE1, OUTSIDE) dynamic interface
+
+object network INSIDE3a-OUTSIDE
+subnet 10.10.0.0 255.255.0.0
+nat (INSIDE2,OUTSIDE) dynamic interface
+
+route OUTSIDE 0.0.0.0 0.0.0.0 205.200.100.1

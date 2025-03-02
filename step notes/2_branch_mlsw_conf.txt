@@ -1,0 +1,16 @@
+vlan 60
+name BLAN
+vlan 90
+name BWLAN
+vlan 199
+name BLACKHOLE
+exit
+
+
+
+int range gig1/0/2-5
+switchport mode trunk
+exit
+
+do wr
+

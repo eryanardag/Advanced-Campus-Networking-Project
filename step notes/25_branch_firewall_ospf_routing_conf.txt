@@ -1,0 +1,9 @@
+
+router ospf 15
+router id 4.3.2.1
+network 205.200.100.0 255.255.255.252 area 0
+network 10.20.20.40 255.255.255.252 area 0
+network 10.20.20.44 255.255.255.252 area 0
+exit
+
+wr mem

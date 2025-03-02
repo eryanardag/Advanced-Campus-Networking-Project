@@ -1,0 +1,11 @@
+router ospf 15
+router-id 7.1.7.1
+network 105.100.50.0 0.0.0.3 area 0
+network 20.20.20.0 0.0.0.3 area 0
+do wr
+
+
+
+
+
+

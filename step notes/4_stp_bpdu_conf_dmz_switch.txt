@@ -1,0 +1,6 @@
+int range 0/2-24
+spanning-tree portfast
+spanning-tree bpduguard enable
+exit
+
+do wr

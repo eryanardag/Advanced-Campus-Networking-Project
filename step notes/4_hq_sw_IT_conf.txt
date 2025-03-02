@@ -1,0 +1,6 @@
+#################################
+int range gig0/1-2
+switchport mode access
+switchport access vlan 10
+exit
+#################################

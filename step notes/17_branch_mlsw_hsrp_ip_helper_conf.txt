@@ -1,0 +1,18 @@
+int vlan 60
+ip add 172.17.0.2/3 255.255.0.0
+ip helper-address 10.20.20.5
+ip helper-address 10.20.20.6
+standby 60 ip 172.17.0.1
+exit
+
+
+
+int vlan 90
+ip add 10.11.0.2/3 255.255.0.0
+ip helper-address 10.20.20.5
+ip helper-address 10.20.20.6
+standby 90 ip 10.11.0.1
+exit
+
+do wr
+

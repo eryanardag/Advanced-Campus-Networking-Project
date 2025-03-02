@@ -1,0 +1,49 @@
+crypto ikev1 policy 10
+
+hash sha
+
+authentication pre-share
+
+group 2
+lifetime 86400
+encryption 3des
+
+exit
+
+!
+
+tunnel-group 205.200.100.2 type IPsec-l2l
+tunnel-group 205.200.100.2 IPsec-attributes
+ikev1 pre-shared-key cisco
+
+!
+
+crypto ipsec ikev1 transform-set TSET esp-3des esp-sha-hmac
+
+!
+
+access-list VPN-ACL permit ip 192.168.10.0 255.255.255.0 172.17.0.0 255.255.0.0
+access-list VPN-ACL permit ip 192.168.10.0 255.255.255.0 10.11.0.0 255.255.0.0
+
+
+access-list VPN-ACL permit ip 172.16.0.0 255.255.0.0 172.17.0.0 255.255.0.0
+access-list VPN-ACL permit ip 172.16.0.0 255.255.0.0 10.11.0.0 255.255.0.0
+
+access-list VPN-ACL permit ip 10.10.0.0 255.255.0.0 172.17.0.0 255.255.0.0
+access-list VPN-ACL permit ip 10.10.0.0 255.255.0.0 10.11.0.0 255.255.0.0
+
+access-list VPN-ACL permit ip 10.20.20.0 255.255.255.224 172.17.0.0 255.255.0.0
+access-list VPN-ACL permit ip 10.20.20.0 255.255.255.224 10.11.0.0 255.255.0.0
+
+!
+
+crypto map CMAP 10 set peer 205.200.100.2
+crypto map CMAP 10 set ikev1 transform-set TSET
+crypto map CMAP 10 match address VPN-ACL
+
+!
+
+crypto map CMAP interface OUTSIDE
+crypto ikev1 enable OUTSIDE
+
+wr mem

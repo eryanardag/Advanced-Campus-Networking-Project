@@ -1,0 +1,5 @@
+router ospf 15
+router-id 9.1.9.1
+network 30.30.30.0 0.0.0.3 area 0
+network 205.200.100.0 0.0.0.3 area 0
+do wr

@@ -1,0 +1,146 @@
+ciscoasa#show running-config 
+: Saved
+:
+ASA Version 9.6(1)
+!
+hostname ciscoasa
+names
+!
+interface GigabitEthernet1/1
+ nameif INSIDE1
+ security-level 100
+ ip address 10.20.20.42 255.255.255.252
+!
+interface GigabitEthernet1/2
+ nameif INSIDE2
+ security-level 100
+ ip address 10.20.20.46 255.255.255.252
+!
+interface GigabitEthernet1/3
+ nameif OUTSIDE
+ security-level 0
+ ip address 205.200.100.2 255.255.255.252
+!
+interface GigabitEthernet1/4
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/5
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/6
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/7
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/8
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+interface Management1/1
+ management-only
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+object network INSIDE1-OUTSIDE
+ subnet 10.11.0.0 255.255.0.0
+ nat (INSIDE1,OUTSIDE) dynamic interface
+object network INSIDE1a-OUTSIDE
+ subnet 10.11.0.0 255.255.0.0
+ nat (INSIDE2,OUTSIDE) dynamic interface
+object network INSIDE2-OUTSIDE
+ subnet 172.17.0.0 255.255.0.0
+ nat (INSIDE1,OUTSIDE) dynamic interface
+object network INSIDE2a-OUTSIDE
+ subnet 172.17.0.0 255.255.0.0
+ nat (INSIDE2,OUTSIDE) dynamic interface
+!
+route OUTSIDE 0.0.0.0 0.0.0.0 205.200.100.1 1
+!
+access-list RES-ACCESS extended permit icmp any any
+access-list RES-ACCESS extended permit udp any any eq bootps
+access-list RES-ACCESS extended permit udp any any eq bootpc
+access-list RES-ACCESS extended permit udp any any eq domain
+access-list RES-ACCESS extended permit tcp any any eq domain
+access-list RES-ACCESS extended permit tcp any any eq www
+access-list RES-ACCESS extended permit tcp any any eq smtp
+access-list RES-ACCESS extended permit tcp any any eq 20
+access-list RES-ACCESS extended permit tcp any any eq ftp
+access-list RES-ACCESS extended permit tcp any any eq 5246
+access-list RES-ACCESS extended permit tcp any any eq 5247
+access-list RES-ACCESS extended permit tcp any any eq 12222
+access-list RES-ACCESS extended permit tcp any any eq 12223
+access-list RES-ACCESS extended permit udp any any eq 5246
+access-list RES-ACCESS extended permit udp any any eq 5247
+access-list RES-ACCESS extended permit udp any any eq 12222
+access-list RES-ACCESS extended permit udp any any eq 12223
+access-list VPN-ACL extended permit ip 172.17.0.0 255.255.0.0 192.168.10.0 255.255.255.0
+access-list VPN-ACL extended permit ip 10.11.0.0 255.255.0.0 192.168.10.0 255.255.255.0
+access-list VPN-ACL extended permit ip 172.17.0.0 255.255.0.0 172.16.0.0 255.255.0.0
+access-list VPN-ACL extended permit ip 10.11.0.0 255.255.0.0 172.16.0.0 255.255.0.0
+access-list VPN-ACL extended permit ip 172.17.0.0 255.255.0.0 10.10.0.0 255.255.0.0
+access-list VPN-ACL extended permit ip 10.11.0.0 255.255.0.0 10.10.0.0 255.255.0.0
+access-list VPN-ACL extended permit ip 172.17.0.0 255.255.0.0 10.20.20.0 255.255.255.224
+access-list VPN-ACL extended permit ip 10.11.0.0 255.255.0.0 10.20.20.0 255.255.255.224
+!
+!
+access-group RES-ACCESS in interface OUTSIDE
+!
+!
+class-map inspection_default
+ match default-inspection-traffic
+!
+policy-map type inspect dns preset_dns_map
+ parameters
+  message-length maximum 512
+policy-map global_policy
+ class inspection_default
+  inspect dns preset_dns_map
+  inspect ftp 
+  inspect tftp 
+!
+service-policy global_policy global
+!
+telnet timeout 5
+ssh timeout 5
+!
+!
+crypto ipsec ikev1 transform-set TSET esp-3des esp-sha-hmac
+!
+crypto map CMAP 10 match address VPN-ACL
+crypto map CMAP 10 set peer 105.100.50.2 
+crypto map CMAP 10 set ikev1 transform-set TSET 
+crypto map CMAP interface OUTSIDE
+crypto ikev1 enable OUTSIDE
+crypto ikev1 policy 10
+ encr 3des
+ authentication pre-share
+ group 2
+!
+tunnel-group 105.100.50.2 type ipsec-l2l
+tunnel-group 105.100.50.2 ipsec-attributes
+ ikev1 pre-shared-key cisco
+!
+router ospf 15
+ router-id 4.3.2.1
+ log-adjacency-changes
+ network 205.200.100.0 255.255.255.252 area 0
+ network 10.20.20.40 255.255.255.252 area 0
+ network 10.20.20.44 255.255.255.252 area 0
+!

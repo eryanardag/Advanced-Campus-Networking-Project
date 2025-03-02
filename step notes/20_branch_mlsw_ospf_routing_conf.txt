@@ -1,0 +1,18 @@
+router ospf 15
+router-id 4.1.4.1
+network 10.20.20.40 0.0.0.3 area 0
+network 172.17.0.0 0.0.0.255 area 0
+network 10.11.0.0 0.0.255.255 area 0
+exit
+do wr
+
+
+router ospf 15
+router-id 5.1.5.1
+network 10.20.20.44 0.0.0.3 area 0
+network 172.17.0.0 0.0.0.255 area 0
+network 10.11.0.0 0.0.255.255 area 0
+exit
+do wr
+
+

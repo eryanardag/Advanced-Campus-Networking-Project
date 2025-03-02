@@ -1,0 +1,20 @@
+access-list RES-ACCESS EXtended Permit icmp any any
+access-list RES-ACCESS EXtended Permit udp any any eq 67
+access-list RES-ACCESS EXtended Permit udp any any eq 68
+access-list RES-ACCESS EXtended Permit udp any any eq 53
+access-list RES-ACCESS EXtended Permit tcp any any eq 53
+access-list RES-ACCESS EXtended Permit tcp any any eq 80
+access-list RES-ACCESS EXtended Permit tcp any any eq 25
+access-list RES-ACCESS EXtended Permit tcp any any eq 20
+access-list RES-ACCESS EXtended Permit tcp any any eq 21
+
+LAPS
+access-list RES-ACCESS EXtended Permit udp any any eq 5246
+access-list RES-ACCESS EXtended Permit udp any any eq 5247
+access-list RES-ACCESS EXtended Permit udp any any eq 12222
+access-list RES-ACCESS EXtended Permit udp any any eq 12223
+write memory
+
+access-group RES-ACCESS in interface OUTSIDE
+
+write memory

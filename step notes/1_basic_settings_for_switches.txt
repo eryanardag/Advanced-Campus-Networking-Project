@@ -1,0 +1,35 @@
+enable
+configure terminal
+
+hostname BR-ART-SW
+
+line console 0
+password cisco
+login
+exec-timeout 3 0
+exit
+
+enable password cisco
+
+banner motd #AUTHORISED ACCESS IS PROHIBITED!!!!!#
+
+no ip domain-lookup
+
+service password-encryption
+
+username cisco password cisco
+ip domain-name cisco.com
+crypto key generate rsa general-keys modulus 1024
+
+ip ssh version 2
+
+access-list 2 permit 192.168.10.0 255.255.255.0
+access-list 2 deny any
+
+line vty 0 15
+login local
+transport input ssh
+access-class 2 in
+exit
+
+do wr

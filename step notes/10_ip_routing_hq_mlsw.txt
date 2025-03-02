@@ -1,0 +1,7 @@
+ip routing 
+int gig1/0/1
+no switchport
+ip address 10.20.20.33/37 255.255.255.252
+exit
+
+do wr

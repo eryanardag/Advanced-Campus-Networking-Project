@@ -1,0 +1,17 @@
+object network INSIDE1-OUTSIDE
+subnet 10.11.0.0 255.255.0.0
+nat (INSIDE1,OUTSIDE) dynamic interface
+object network INSIDE1a-OUTSIDE
+subnet 10.11.0.0 255.255.0.0
+nat (INSIDE2,OUTSIDE) dynamic interface
+
+object network INSIDE2-OUTSIDE
+subnet 172.17.0.0 255.255.0.0
+nat (INSIDE1,OUTSIDE) dynamic interface
+object network INSIDE2a-OUTSIDE
+subnet 172.17.0.0 255.255.0.0
+nat (INSIDE2,OUTSIDE) dynamic interface
+
+ex
+
+wr mem
